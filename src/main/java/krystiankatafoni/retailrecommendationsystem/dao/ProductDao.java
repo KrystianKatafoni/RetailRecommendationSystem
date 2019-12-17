@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @Qualifier("product")
-public class ProductDao implements SingleNodeDao<Product> {
+public class ProductDao implements NodeWithRelationshipDao<Product> {
 
     private final String LOAD_PRODUCTS = "USING PERIODIC COMMIT 500 LOAD CSV WITH HEADERS FROM 'file:///products.csv' AS line " +
             "CREATE (p:Product { id: line.id, desc: line.product})";
@@ -22,6 +22,7 @@ public class ProductDao implements SingleNodeDao<Product> {
             "MATCH (p:Product),(c:Category),(b:Brand) " +
             "WHERE p.id=line.id AND c.id=line.category_id AND b.id=line.brand_id" +
             " CREATE (b)-[bp:MANUFACTURED]->(p), (p)-[pc:BELONG_TO]->(c)";
+
     @Override
     public Optional<Product> get(int id) {
         return Optional.empty();
@@ -48,13 +49,28 @@ public class ProductDao implements SingleNodeDao<Product> {
     }
 
     @Override
-    public void loadAllFromCsv() {
+    public void loadAllNodes() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
                 AuthTokens.basic(DatabaseConnection.USERNAME, DatabaseConnection.PASSWORD));
              Session session = driver.session()) {
             session.run(LOAD_PRODUCTS);
+
+        }
+    }
+
+
+    @Override
+    public void add(Product product) {
+
+    }
+
+    @Override
+    public void loadAllRelationships() {
+        try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
+                AuthTokens.basic(DatabaseConnection.USERNAME, DatabaseConnection.PASSWORD));
+             Session session = driver.session()) {
             session.run(CREATE_RELATIONSHIPS);
-            System.out.println("\nData loaded\n");
+
         }
     }
 }

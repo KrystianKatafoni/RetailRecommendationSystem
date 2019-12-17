@@ -43,11 +43,10 @@ public class UserDao implements SingleNodeDao<User>{
     }
 
     @Override
-    public void loadAllFromCsv() {
+    public void loadAllNodes() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
                 AuthTokens.basic(DatabaseConnection.USERNAME, DatabaseConnection.PASSWORD));
-             Session session = driver.session()) {
-
+                Session session = driver.session()) {
             session.run(LOAD_USERS);
         }
     }

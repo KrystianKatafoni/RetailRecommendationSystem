@@ -43,7 +43,7 @@ public class BrandDao implements SingleNodeDao<Brand> {
     }
 
     @Override
-    public void loadAllFromCsv() {
+    public void loadAllNodes() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
                 AuthTokens.basic(DatabaseConnection.USERNAME, DatabaseConnection.PASSWORD));
              Session session = driver.session()) {
