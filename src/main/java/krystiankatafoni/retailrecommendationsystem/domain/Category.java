@@ -1,4 +1,4 @@
 package krystiankatafoni.retailrecommendationsystem.domain;
 
-public class Event {
+public class Category {
 }
