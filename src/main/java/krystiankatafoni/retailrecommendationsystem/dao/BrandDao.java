@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Dao which represents operations in db on brands fe. samsung, apple etc.
+ */
 @Repository
 @Qualifier("brand")
 public class BrandDao implements SingleNodeDao<Brand> {
@@ -42,6 +45,10 @@ public class BrandDao implements SingleNodeDao<Brand> {
 
     }
 
+    /**
+     * Load all nodes from brand.csv file and save to db. Method is using query saved
+     * in LOAD_BRANDS variable
+     */
     @Override
     public void loadAllNodes() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
