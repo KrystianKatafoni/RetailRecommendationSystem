@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Dao which represents operations on user in db
+ */
 @Repository
 @Qualifier("user")
 public class UserDao implements SingleNodeDao<User>{
@@ -42,6 +45,10 @@ public class UserDao implements SingleNodeDao<User>{
 
     }
 
+    /**
+     * Load all nodes from user.csv file and save to db. Method is using query saved
+     * in LOAD_USERS variable
+     */
     @Override
     public void loadAllNodes() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,

@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Class which delete all nodes from db on startup and next
+ * using dao is loading all data from .csv file to neo4j db
+ */
 @Component
 public class AppStartup implements CommandLineRunner {
 
@@ -29,6 +32,7 @@ public class AppStartup implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        long start = System.currentTimeMillis();
         allNodesDao.deleteAll();
         categoryDao.loadAllNodes();
         brandDao.loadAllNodes();
@@ -36,5 +40,7 @@ public class AppStartup implements CommandLineRunner {
         productDao.loadAllNodes();
         productDao.loadAllRelationships();
         eventDao.loadAllRelationships();
+        long diff = System.currentTimeMillis()-start;
+        System.out.println(Double.toString(diff/1000));
     }
 }

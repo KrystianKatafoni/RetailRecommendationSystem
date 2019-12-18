@@ -6,6 +6,9 @@ import org.neo4j.driver.v1.GraphDatabase;
 import org.neo4j.driver.v1.Session;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Dao which represents all nodes from db and operation on them
+ */
 @Repository
 public class AllNodesDao implements NodesDao {
     private final String DELETE_ALL = "MATCH (n) DETACH DELETE n";

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Dao which represents operation in db on categories fe. computers, storages etc.
+ */
 @Repository
 @Qualifier("category")
 public class CategoryDao implements SingleNodeDao<Category> {
@@ -44,6 +47,10 @@ public class CategoryDao implements SingleNodeDao<Category> {
     public void delete(Category category) {
 
     }
+    /**
+     * Load all nodes from category.csv file and save to db. Method is using query saved
+     * in LOAD_CATEGORIES variable
+     */
     @Override
     public void loadAllNodes() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
