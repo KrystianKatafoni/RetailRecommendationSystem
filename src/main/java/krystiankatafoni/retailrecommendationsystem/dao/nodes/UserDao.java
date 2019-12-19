@@ -1,6 +1,8 @@
-package krystiankatafoni.retailrecommendationsystem.dao;
+package krystiankatafoni.retailrecommendationsystem.dao.nodes;
 
-import krystiankatafoni.retailrecommendationsystem.domain.User;
+import krystiankatafoni.retailrecommendationsystem.dao.DatabaseConnection;
+import krystiankatafoni.retailrecommendationsystem.dao.generic.NodeDao;
+import krystiankatafoni.retailrecommendationsystem.domain.nodes.User;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
@@ -12,11 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Dao which represents operations on user in db
+ * Dao which represents operations on user nodes in db
  */
 @Repository
 @Qualifier("user")
-public class UserDao implements SingleNodeDao<User>{
+public class UserDao implements NodeDao<User> {
     private final String LOAD_USERS = "LOAD CSV WITH HEADERS FROM 'file:///users.csv' AS line " +
             "CREATE (:User { id: line.id, age: line.age, gender:line.gender})";
 
@@ -50,7 +52,7 @@ public class UserDao implements SingleNodeDao<User>{
      * in LOAD_USERS variable
      */
     @Override
-    public void loadAllNodes() {
+    public void loadCollection() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
                 AuthTokens.basic(DatabaseConnection.USERNAME, DatabaseConnection.PASSWORD));
                 Session session = driver.session()) {
