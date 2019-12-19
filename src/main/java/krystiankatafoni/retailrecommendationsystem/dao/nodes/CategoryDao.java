@@ -1,6 +1,8 @@
-package krystiankatafoni.retailrecommendationsystem.dao;
+package krystiankatafoni.retailrecommendationsystem.dao.nodes;
 
-import krystiankatafoni.retailrecommendationsystem.domain.Category;
+import krystiankatafoni.retailrecommendationsystem.dao.DatabaseConnection;
+import krystiankatafoni.retailrecommendationsystem.dao.generic.NodeDao;
+import krystiankatafoni.retailrecommendationsystem.domain.nodes.Category;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
@@ -16,7 +18,7 @@ import java.util.Optional;
  */
 @Repository
 @Qualifier("category")
-public class CategoryDao implements SingleNodeDao<Category> {
+public class CategoryDao implements NodeDao<Category> {
 
     private final String LOAD_CATEGORIES = "LOAD CSV WITH HEADERS FROM 'file:///categories.csv' AS line " +
             "CREATE (:Category { id: line.id, name: line.category})";
@@ -52,7 +54,7 @@ public class CategoryDao implements SingleNodeDao<Category> {
      * in LOAD_CATEGORIES variable
      */
     @Override
-    public void loadAllNodes() {
+    public void loadCollection() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
                 AuthTokens.basic(DatabaseConnection.USERNAME, DatabaseConnection.PASSWORD));
              Session session = driver.session()) {

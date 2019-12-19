@@ -1,6 +1,8 @@
-package krystiankatafoni.retailrecommendationsystem.dao;
+package krystiankatafoni.retailrecommendationsystem.dao.nodes;
 
-import krystiankatafoni.retailrecommendationsystem.domain.Brand;
+import krystiankatafoni.retailrecommendationsystem.dao.DatabaseConnection;
+import krystiankatafoni.retailrecommendationsystem.dao.generic.NodeDao;
+import krystiankatafoni.retailrecommendationsystem.domain.nodes.Brand;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
@@ -16,7 +18,7 @@ import java.util.Optional;
  */
 @Repository
 @Qualifier("brand")
-public class BrandDao implements SingleNodeDao<Brand> {
+public class BrandDao implements NodeDao<Brand> {
     private final String LOAD_BRANDS = "LOAD CSV WITH HEADERS FROM 'file:///brands.csv' AS line " +
             "CREATE (:Brand { id: line.id, name: line.brand})";
 
@@ -50,7 +52,7 @@ public class BrandDao implements SingleNodeDao<Brand> {
      * in LOAD_BRANDS variable
      */
     @Override
-    public void loadAllNodes() {
+    public void loadCollection() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
                 AuthTokens.basic(DatabaseConnection.USERNAME, DatabaseConnection.PASSWORD));
              Session session = driver.session()) {

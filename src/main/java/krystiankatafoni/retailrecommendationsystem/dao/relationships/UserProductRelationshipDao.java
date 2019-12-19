@@ -1,6 +1,7 @@
-package krystiankatafoni.retailrecommendationsystem.dao;
+package krystiankatafoni.retailrecommendationsystem.dao.relationships;
 
-import krystiankatafoni.retailrecommendationsystem.domain.Event;
+import krystiankatafoni.retailrecommendationsystem.dao.DatabaseConnection;
+import krystiankatafoni.retailrecommendationsystem.domain.relationships.UserWithProduct;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
@@ -14,22 +15,25 @@ import org.springframework.stereotype.Repository;
  * three kind of events: view, cart, purchased
  */
 @Repository
-@Qualifier("event")
-public class EventDao implements RelationshipDao<Event> {
+@Qualifier("userProduct")
+public class UserProductRelationshipDao implements RelationshipDao<UserWithProduct> {
     private final String CREATE_RELATIONSHIPS = "USING PERIODIC COMMIT 1000 LOAD CSV WITH HEADERS " +
             "FROM 'file:///events.csv' AS line " +
             "MATCH (p:Product),(u:User) " +
             "WHERE p.id=line.product_id AND u.id=line.user_id" +
             " CALL apoc.create.relationship(u, line.event,{weight: line.weight}, p) YIELD rel REMOVE rel.noOp";
+
     @Override
-    public void add(Event event) {}
+    public void addRelationship(UserWithProduct userWithProduct) {
+
+    }
 
     /**
      * Load all relationships from event.csv file and save to db. Method is using query saved
      * in CREATE_RELATIONSHIP variable. Additional query is using apoc plugin installed in neo4j db.
      */
     @Override
-    public void loadAllRelationships() {
+    public void loadCollection() {
         try (Driver driver = GraphDatabase.driver(DatabaseConnection.URI,
                 AuthTokens.basic(DatabaseConnection.USERNAME, DatabaseConnection.PASSWORD));
              Session session = driver.session()) {

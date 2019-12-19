@@ -1,5 +1,7 @@
-package krystiankatafoni.retailrecommendationsystem.dao;
+package krystiankatafoni.retailrecommendationsystem.dao.nodes;
 
+import krystiankatafoni.retailrecommendationsystem.dao.DatabaseConnection;
+import krystiankatafoni.retailrecommendationsystem.dao.generic.NodesDao;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;

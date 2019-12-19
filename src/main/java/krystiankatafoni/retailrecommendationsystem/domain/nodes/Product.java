@@ -1,4 +1,4 @@
-package krystiankatafoni.retailrecommendationsystem.domain;
+package krystiankatafoni.retailrecommendationsystem.domain.nodes;
 
 import java.util.Objects;
 
@@ -6,14 +6,13 @@ import java.util.Objects;
  * Class which represents Product node
  */
 public class Product {
+    public static final String label = "Product";
     private String id;
     private String description;
-    private int weightSum;
 
-    public Product(String id, String description, int weightSum) {
+    public Product(String id, String description) {
         this.id = id;
         this.description = description;
-        this.weightSum = weightSum;
     }
 
     public String getId() {
@@ -32,11 +31,5 @@ public class Product {
         this.description = description;
     }
 
-    public int getWeightSum() {
-        return weightSum;
-    }
 
-    public void setWeightSum(int weightSum) {
-        this.weightSum = weightSum;
-    }
 }

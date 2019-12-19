@@ -1,0 +1,5 @@
+package krystiankatafoni.retailrecommendationsystem.services.generic;
+
+import krystiankatafoni.retailrecommendationsystem.domain.ProductWithSearchScore;
+
+public interface ProductFullTextSearchService extends FullTextSearchService<ProductWithSearchScore>{}
